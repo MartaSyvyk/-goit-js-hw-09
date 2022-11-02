@@ -1,3 +1,5 @@
+import { Notify } from 'notiflix/build/notiflix-notify-aio';
+
 const refs = {
   delayEl: document.querySelector('input[name = "delay"]'),
   stepEl: document.querySelector('input[name = "step"]'),
@@ -33,9 +35,11 @@ function onSubmitClick(event) {
     let currentPromise = createPromise(index, delay)
     currentPromise
     .then(value => {
-      console.log(value)})
+      console.log(value);
+    Notify.success(value)})
       .catch(error => {
         console.log(error);
+        Notify.failure(error);
       }); 
        delay += step;
     };
