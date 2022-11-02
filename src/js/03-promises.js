@@ -1,59 +1,47 @@
-// function createPromise(position, delay) {
+const refs = {
+  delayEl: document.querySelector('input[name = "delay"]'),
+  stepEl: document.querySelector('input[name = "step"]'),
+  amountEl: document.querySelector('input[name = "amount"]'),
+  submitButton: document.querySelector('button'),
+};
 
-//   const shouldResolve = Math.random() > 0.3;
-
-//   const promise = newPromise ((resolve, reject) => {
+function createPromise(position, delay) {
   
-//   setTimeout( () => {
-//       if (shouldResolve) {
-   
-//     resolve("Success");
+    return new Promise((resolve, reject) => {
+      setTimeout(() => {
+      const shouldResolve = Math.random() > 0.3;
+
+      if (shouldResolve) {
+        resolve(`Resolved promise ${position} in ${delay} ms`);
+        
+      } else {
+        reject(`Rejected promise ${position} in ${delay} ms`);
+        
+      }
+    }, delay);
+  });
+}
+
+function onSubmitClick(event) {
+  event.preventDefault();
+  let attempts = parseInt(refs.amountEl.value);
+  let delay = parseInt(refs.delayEl.value);
+  let step = parseInt(refs.stepEl.value);
+
   
-
-//   } else {
-//     reject("Error");
-//     // Reject
-//   }}, delay);
-//   return promise;
-// }
-// };
-
-
-//   function onPromiseSuccess (result) {
-//     console.log(result, position);
-//   }
-
-//   function onPromiseFail (error, position) {
-//     console.log(error);
-//   }
-
-// const p = createPromise(2, 500);
+  for (let index = 1; index <= attempts; index += 1) {
+    let currentPromise = createPromise(index, delay)
+    currentPromise
+    .then(value => {
+      console.log(value)})
+      .catch(error => {
+        console.log(error);
+      }); 
+       delay += step;
+    };
+  
+    
+  }
 
 
-
-// //   function onPromiseSuccess (result) {
-// //     console.log(result);
-// //   }
-
-// //   function onPromiseFail (error) {
-// //     console.log(error);
-// //   }
-
-// //   createPromise(position, delay) {
-
-// //   }
-
-
-// // let PromptDelay = 1000;
-// // let DelayStep = 500;
-// // let PromptCounter = 0;
-// // let maxAttempts = 4;
-
-// // const intervalId = setInterval(() => {
-// //   if(PromptCounter === maxAttempts) {
-// //     console.log("done");
-// //     return;
-// //   }
-// //   PromptCounter += 1;
-// //   createPromise()
-// // })
+refs.submitButton.addEventListener('click', onSubmitClick);
